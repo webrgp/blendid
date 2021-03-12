@@ -10,6 +10,7 @@ const projectPath     = require('./projectPath')
 const webpack         = require('webpack')
 const webpackManifest = require('./webpackManifest')
 const querystring     = require('querystring')
+const UglifyJsPlugin  = require('uglifyjs-webpack-plugin')
 
 module.exports = function (env) {
 
@@ -88,9 +89,7 @@ module.exports = function (env) {
 
     webpackConfig.plugins.push(
       new webpack.DefinePlugin(TASK_CONFIG.javascripts.production.definePlugin),
-      (webpackConfig.uglifyPlugin) // Allow the use of other uglifier
-          ? new webpackConfig.uglifyPlugin(uglifyConfig)
-          : new webpack.optimize.UglifyJsPlugin(uglifyConfig),
+      new UglifyJsPlugin(uglifyConfig),
       new webpack.NoEmitOnErrorsPlugin()
     )
   }
