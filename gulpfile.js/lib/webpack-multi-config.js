@@ -88,7 +88,9 @@ module.exports = function (env) {
 
     webpackConfig.plugins.push(
       new webpack.DefinePlugin(TASK_CONFIG.javascripts.production.definePlugin),
-      new webpack.optimize.UglifyJsPlugin(uglifyConfig),
+      (webpackConfig.uglifyPlugin) // Allow the use of other uglifier
+          ? new webpackConfig.uglifyPlugin(uglifyConfig)
+          : new webpack.optimize.UglifyJsPlugin(uglifyConfig),
       new webpack.NoEmitOnErrorsPlugin()
     )
   }
